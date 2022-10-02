@@ -31,6 +31,28 @@ app.get("/getMessage", async (req, res) => {
     .findOne({ message: "message1" });
   res.json(result);
 });
+app.put("/resetBoard", async (req, res) => {
+  const db = await MongoClient.connect(url);
+  let dbo = db.db("admin");
+  await dbo
+    .collection("messages")
+    .updateOne(
+      { message: "message1" },
+      { $set: { updated: {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+        6: 0,
+        7: 0,
+        8: 0,
+        9: 0,
+      } } }
+    );
+  res.end();
+  return;
+});
 app.put("/putMessage", async (req, res) => {
   const db = await MongoClient.connect(url);
   let dbo = db.db("admin");
